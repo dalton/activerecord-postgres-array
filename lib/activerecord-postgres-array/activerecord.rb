@@ -1,4 +1,4 @@
-require 'active_record/connection_adapters/postgresql_adapter'
+require 'arjdbc/jdbc/adapter'
 
 module ActiveRecord
   class ArrayTypeMismatch < ActiveRecord::ActiveRecordError
@@ -29,7 +29,7 @@ module ActiveRecord
   end
 
   module ConnectionAdapters
-    class PostgreSQLAdapter < AbstractAdapter
+    class JdbcAdapter < AbstractAdapter
       POSTGRES_ARRAY_TYPES = %w( string text integer float decimal datetime timestamp time date binary boolean )
 
       def native_database_types_with_array(*args)
@@ -56,7 +56,7 @@ module ActiveRecord
       #     t.decimal_array :real_energy, :precision => 18, :scale => 6
       #     ...
       #   end
-      PostgreSQLAdapter::POSTGRES_ARRAY_TYPES.each do |column_type|
+      JdbcAdapter::POSTGRES_ARRAY_TYPES.each do |column_type|
         define_method("#{column_type}_array") do |*args|
           options = args.extract_options!
           base_type = @base.type_to_sql(column_type.to_sym, options[:limit], options[:precision], options[:scale])
@@ -74,7 +74,7 @@ module ActiveRecord
       #     t.decimal_array :real_energy, :precision => 18, :scale => 6
       #     ...
       #   end
-      PostgreSQLAdapter::POSTGRES_ARRAY_TYPES.each do |column_type|
+      JdbcAdapter::POSTGRES_ARRAY_TYPES.each do |column_type|
         define_method("#{column_type}_array") do |*args|
           options = args.extract_options!
           base_type = @base.type_to_sql(column_type.to_sym, options[:limit], options[:precision], options[:scale])
