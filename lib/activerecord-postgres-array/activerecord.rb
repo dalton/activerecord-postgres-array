@@ -84,7 +84,7 @@ module ActiveRecord
       end
     end
 
-    class PostgreSQLColumn < Column
+    class JdbcColumn < Column
       # Does the type casting from array columns using String#from_postgres_array or Array#from_postgres_array.
       def type_cast_code_with_array(var_name)
         if type.to_s =~ /_array$/
